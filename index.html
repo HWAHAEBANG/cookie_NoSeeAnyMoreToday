@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ABC corp.</title>
+  <style>
+    .popup {
+      position: fixed;
+      left: 100px;
+      top: 100px;
+      border: 1px solid #ebebeb;
+      padding: 40px 60px;
+      display: none; 
+    }
+  </style>
+</head>
+<body>
+  <h1>ABC</h1>
+  <div class="popup">
+    <h2>반갑습니다.</h2>
+    <input type="checkbox" id="popup">
+    <label for="popup">하루 안보기</label>
+    <button class="close">닫기</button>
+  </div>
+  <script>
+    let myPopup = document.querySelector('.popup');
+    let checkbox = document.querySelector('#popup');
+    let popupClose = document.querySelector('.close');
+
+    //쿠키생성
+    //setCookie('ABC.com','Main',7);
+    
+    function setCookie(name, value, day){
+      let date = new Date();
+      date.setDate(date.getDate() + day);
+
+      let mycookie = '';
+      mycookie += name + '=' + value + ';';
+      mycookie += 'Expires=' + date.toUTCString();
+
+      document.cookie = mycookie;
+    }
+    
+
+
+        // 쿠키 삭제
+      function delCookie(name) {
+      let date = new Date();
+      date.setDate(date.getDate() - 1);
+      let setCookie = '';
+
+      setCookie += name+'=Main;';
+      setCookie += 'Expires=' + date.toUTCString();
+
+      document.cookie = setCookie; // 쿠키 설정, 생성
+    }
+
+    //   document.getElementById('popup').addEventListener('click', () => {
+    //   delCookie();
+    //   // alert('쿠키삭제됨');
+    // });
+
+    // 쿠키 확인
+    function checkCookie(name){
+      let cookies = document.cookie.split(';')
+      console.log(cookies);
+      let visited = false; // 방문 거짓
+
+      for(i in cookies){
+        if(cookies[i].indexOf(name) > -1){
+          visited = true;
+          console.log(visited);
+          // alert('다시 방문해주셔서 감사합니다.')
+        }
+        //console.log(visited);
+      }
+      if(visited){ // 재방문
+        myPopup.style.display = 'none'
+      }else{
+        myPopup.style.display = 'block'
+      }
+
+    }
+    checkCookie('ABC.com')
+
+    popupClose.addEventListener('click', ()=>{
+      if(checkbox.checked){
+        // 팝업을 다시 안보겠다. 팝업 닫고, 쿠키 생성. 
+        setCookie('ABC.com','Main',1);
+        myPopup.style.display = 'none' // 둘다 닫긴 닫음
+      } else {
+        delCookie('ABC.com') 
+        myPopup.style.display = 'none' // 둘다 닫긴 닫음
+      } // 팝업을 계속 본다. 팝업 닫고, 쿠키 제거.
+    })
+
+   </script>
+</body>
+</html>

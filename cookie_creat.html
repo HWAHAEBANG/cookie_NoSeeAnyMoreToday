@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>쿠키 생성</title>
+</head>
+
+<body>
+  <button id='delcookie'>쿠키 삭제</button>
+  <script>
+    // 쿠키 만들기
+    /* 
+      document.cookie = "Name= 값; Value= 값; Expires= 값"
+      날짜 추출 date.getDate();
+      날짜 지정 date.setDate(새로운 날짜);  
+       */
+
+    let date = new Date()
+    // console.log(date);
+    // console.log(date.getDate() + 7);
+
+    date.setDate(date.getDate() + 7);
+    // console.log(date);
+
+    // date.toUTCString UTC방식으로 바꾸는 법
+
+    let setCookie = '';
+    //setCookie = setCookie + 'CookieName=ABC;';
+    setCookie += 'CookieName=ABC;';
+    setCookie += 'Expires=' + date.toUTCString();
+
+    document.cookie = setCookie; // 쿠키 설정, 생성
+    console.log(document.cookie); // 쿠키확인 
+
+    // 쿠키 삭제
+    function delCookie() {
+      date.setDate(date.getDate() - 1);
+      let setCookie = '';
+
+      setCookie += 'CookieName=ABC;';
+      setCookie += 'Expires=' + date.toUTCString();
+
+      document.cookie = setCookie; // 쿠키 설정, 생성
+    }
+
+    document.getElementById('delcookie').addEventListener('click', () => {
+      delCookie();
+      // alert('쿠키삭제됨');
+    });
+  </script>
+</body>
+
+</html>
